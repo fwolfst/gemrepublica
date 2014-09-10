@@ -8,7 +8,9 @@ With gemrepublica it becomes even easier to clone the code of a given gem and st
 
 Install with:
 
+```sh
     $ gem install gemrepublica
+```
 
 ## Usage
 
@@ -19,7 +21,7 @@ Currently, gemrepublica ships with a single executable,
 While `gemrepublica --help` will give you a basic help, you usually want to call it like
 
 ```sh
-  $ gemrepublica <gem name> <location for clone>
+    $ gemrepublica <gem name> <location for clone>
 ```
 
 This will clone the gems source (if it can be found) to the given location.
@@ -27,15 +29,17 @@ This will clone the gems source (if it can be found) to the given location.
 For example
 
 ```sh
-  $ gemrepublica gemrepublica /home/fwolfst/dollies/
+    $ gemrepublica gemrepublica /home/fwolfst/dollies/
 ```
 
-will create a git clone of this repository in `/home/fwolfst/dollies/gemrepublica`.  It's as easy as that!
+would create a git clone of this repository in `/home/fwolfst/dollies/gemrepublica`.  It's as easy as that!
+
+Now, why __would__ create?  I did not specify the source code link (see below, in Limitations section).
 
 If you want to work with your private clone, remember that you can
 
 ```sh
-  $ bundle exec bin/gemrepublica
+    $ bundle exec bin/gemrepublica
 ```
 
 To work with your copy rather than the installed version.
