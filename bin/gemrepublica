@@ -1,0 +1,58 @@
+#!/usr/bin/env ruby
+
+require 'optparse'
+require 'gemrepublica'
+
+options = {}
+program_name = File.basename __FILE__
+
+optparse = OptionParser.new do |opts|
+  opts.banner = "Usage: #{program_name} <gem_name> <location_of_clone>"
+end
+
+optparse.parse!
+
+# Check required positional arguments.
+if ARGV.length != 2
+  STDERR.puts "Need to specify gem_name and location_of_clone."
+  STDERR.puts optparse.help
+  exit 1
+end
+
+# Acquire gem info.
+gem_info = Gems.info(ARGV[0])
+if gem_info.nil? || gem_info.empty?
+  STDERR.puts "Could not find anything about '#{ARGV[0]}' at rubygems.org."
+  exit 2
+end
+
+if gem_info['source_code_uri'].nil? || gem_info['source_code_uri'].empty?
+  STDERR.puts "'#{ARGV[0]}' does not have a source_code_uri specified.."
+  exit 3
+  # TODO Now, we could give the user pointers, to
+  # 1) the project owners name
+  # 2) the projects bug tracker to file an issue
+  # 3) the project page
+  # Also, we could check if the project page looks like a github (or other 
+  # repository) uri.
+end
+
+repo_adress = gem_info['source_code_uri']
+if !(repo_adress =~ /github/)
+  STDERR.puts "#{repo_adress} seems not to be a github repository."
+  exit 4
+end
+
+# TODO Check if license is sensible, warn otherwise.
+
+# TODO Create ARGV[1]
+git_repo = Git::clone(repo_adress, gem_info['name'], :path => ARGV[1])
+if git_repo.nil?
+  STDERR.puts "Cloning of github repository #{repo_adress} into #{ARGV[1]} failed."
+  exit 5
+end
+
+puts "Successfully cloned #{repo_adress} into #{ARGV[1]}."
+
+# Be nice, explicitely exit with success.
+exit 0
