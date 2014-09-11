@@ -4,6 +4,10 @@ Ruby gems are great.  The community of developers is nice.  Contributions are we
 
 With gemrepublica it becomes even easier to clone the code of a given gem and start hacking.
 
+## Similar Projects
+
+I found out that most functionality is already made available to `gem` itself, realized with plugins (see http://guides.rubygems.org/plugins/).  Let's see how we will consolidate this.
+
 ## Installation
 
 Install with:
