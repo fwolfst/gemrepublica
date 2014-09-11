@@ -8,6 +8,10 @@ program_name = File.basename __FILE__
 
 optparse = OptionParser.new do |opts|
   opts.banner = "Usage: #{program_name} <gem_name> <location_of_clone>"
+
+  opts.on('-k', '--kick-in', 'cd in the clone, call bundler and start vim') do |k|
+    options[:kick] = k
+  end
 end
 
 optparse.parse!
@@ -53,6 +57,11 @@ if git_repo.nil?
 end
 
 puts "Successfully cloned #{repo_adress} into #{ARGV[1]}."
+
+if options[:kick]
+  puts "Will now get you started..."
+  exec "cd #{ARGV[1]}/#{gem_info['name']}; bundle; vim"
+end
 
 # Be nice, explicitely exit with success.
 exit 0
